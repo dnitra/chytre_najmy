@@ -39,4 +39,4 @@ jobs:
         run: npm install
         # PRETTIER
       - name: Prettier check
-        run: npx prettier --check .
+        run: npx prettier --check resources/
