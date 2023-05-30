@@ -48,6 +48,21 @@ services:
                 - '-p${DB_PASSWORD}'
             retries: 3
             timeout: 5s
+    phpmyadmin:
+        image: phpmyadmin:5.2.0
+        container_name: phpmyadmin
+        environment:
+            PMA_ARBITRARY: 1
+            PMA_HOST: ${DB_HOST}
+            PMA_USER: ${DB_USERNAME}
+            PMA_PASSWORD: ${DB_PASSWORD}
+            PMA_PORT: ${DB_PORT}
+        depends_on:
+            - mysql
+        ports:
+            - 8888:80
+        networks:
+            - sail
 networks:
     sail:
         driver: bridge
