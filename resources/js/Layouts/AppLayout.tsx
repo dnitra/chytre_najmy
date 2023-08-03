@@ -74,7 +74,9 @@ export default function AppLayout({
                                     </NavLink>
                                     <NavLink
                                         href={route("my-properties")}
-                                        active={route().current("my-properties")}
+                                        active={route().current(
+                                            "my-properties"
+                                        )}
                                     >
                                         My Properties
                                     </NavLink>

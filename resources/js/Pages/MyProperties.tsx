@@ -3,7 +3,6 @@ import AppLayout from "@/Layouts/AppLayout";
 import Index from "@/Components/MyProperties/Index";
 import Show from "@/Components/MyProperties/Show";
 
-
 export default function MyProperties() {
     return (
         <AppLayout
@@ -21,7 +20,7 @@ export default function MyProperties() {
                             <Index />
                             <div className="p-6">
                                 {/* show different content  */}
-                                <Show /> 
+                                <Show />
                             </div>
                         </div>
                     </div>
