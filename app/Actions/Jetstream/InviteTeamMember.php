@@ -21,17 +21,21 @@ class InviteTeamMember implements InvitesTeamMembers
     /**
      * Invite a new team member to the given team.
      */
-    public function invite(User $user, Team $team, string $email, string $role = null): void
-    {
-        Gate::forUser($user)->authorize('addTeamMember', $team);
+    public function invite(
+        User $user,
+        Team $team,
+        string $email,
+        string $role = null
+    ): void {
+        Gate::forUser($user)->authorize("addTeamMember", $team);
 
         $this->validate($team, $email, $role);
 
         InvitingTeamMember::dispatch($team, $email, $role);
 
         $invitation = $team->teamInvitations()->create([
-            'email' => $email,
-            'role' => $role,
+            "email" => $email,
+            "role" => $role,
         ]);
 
         Mail::to($email)->send(new TeamInvitation($invitation));
@@ -42,14 +46,20 @@ class InviteTeamMember implements InvitesTeamMembers
      */
     protected function validate(Team $team, string $email, ?string $role): void
     {
-        Validator::make([
-            'email' => $email,
-            'role' => $role,
-        ], $this->rules($team), [
-            'email.unique' => __('This user has already been invited to the team.'),
-        ])->after(
-            $this->ensureUserIsNotAlreadyOnTeam($team, $email)
-        )->validateWithBag('addTeamMember');
+        Validator::make(
+            [
+                "email" => $email,
+                "role" => $role,
+            ],
+            $this->rules($team),
+            [
+                "email.unique" => __(
+                    "This user has already been invited to the team."
+                ),
+            ]
+        )
+            ->after($this->ensureUserIsNotAlreadyOnTeam($team, $email))
+            ->validateWithBag("addTeamMember");
     }
 
     /**
@@ -60,29 +70,36 @@ class InviteTeamMember implements InvitesTeamMembers
     protected function rules(Team $team): array
     {
         return array_filter([
-            'email' => [
-                'required', 'email',
-                Rule::unique('team_invitations')->where(function (Builder $query) use ($team) {
-                    $query->where('team_id', $team->id);
+            "email" => [
+                "required",
+                "email",
+                Rule::unique("team_invitations")->where(function (
+                    Builder $query
+                ) use ($team) {
+                    $query->where("team_id", $team->id);
                 }),
             ],
-            'role' => Jetstream::hasRoles()
-                            ? ['required', 'string', new Role]
-                            : null,
+            "role" => Jetstream::hasRoles()
+                ? ["required", "string", new Role()]
+                : null,
         ]);
     }
 
     /**
      * Ensure that the user is not already on the team.
      */
-    protected function ensureUserIsNotAlreadyOnTeam(Team $team, string $email): Closure
-    {
+    protected function ensureUserIsNotAlreadyOnTeam(
+        Team $team,
+        string $email
+    ): Closure {
         return function ($validator) use ($team, $email) {
-            $validator->errors()->addIf(
-                $team->hasUserWithEmail($email),
-                'email',
-                __('This user already belongs to the team.')
-            );
+            $validator
+                ->errors()
+                ->addIf(
+                    $team->hasUserWithEmail($email),
+                    "email",
+                    __("This user already belongs to the team.")
+                );
         };
     }
 }
