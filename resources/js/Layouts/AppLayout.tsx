@@ -72,6 +72,12 @@ export default function AppLayout({
                                     >
                                         Dashboard
                                     </NavLink>
+                                    <NavLink
+                                        href={route("my-properties")}
+                                        active={route().current("my-properties")}
+                                    >
+                                        My Properties
+                                    </NavLink>
                                 </div>
                             </div>
 
@@ -341,6 +347,12 @@ export default function AppLayout({
                                 active={route().current("dashboard")}
                             >
                                 Dashboard
+                            </ResponsiveNavLink>
+                            <ResponsiveNavLink
+                                href={route("my-properties")}
+                                active={route().current("my-properties")}
+                            >
+                                My Properties
                             </ResponsiveNavLink>
                         </div>
 
