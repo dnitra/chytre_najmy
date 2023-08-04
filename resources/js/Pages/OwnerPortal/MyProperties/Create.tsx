@@ -1,20 +1,14 @@
 import React from "react";
 import MyProperties from "../MyProperties";
-import { usePage } from "@inertiajs/react";
 import AppLayout from "@/Layouts/AppLayout";
 
-const Show = () => {
-    const { id } = usePage().props;
-
-    console.log(id);
-
-    return <h1>Show Detail of Property</h1>;
+const Create = () => {
+    return <h1>Create/Edit Form</h1>;
 };
 
-Show.layout = (page: any) => (
+Create.layout = (page: any) => (
     <AppLayout
         title="My Properties"
-        activeProperty={page.props.id}
         renderHeader={() => (
             <h2 className="font-semibold text-xl text-gray-800 leading-tight">
                 My Properties
@@ -24,4 +18,5 @@ Show.layout = (page: any) => (
         <MyProperties children={page} />
     </AppLayout>
 );
-export default Show;
+
+export default Create;
