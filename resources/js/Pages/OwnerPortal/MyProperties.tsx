@@ -1,9 +1,12 @@
 import React from "react";
 import AppLayout from "@/Layouts/AppLayout";
-import Index from "@/Components/MyProperties/Index";
-import Show from "@/Components/MyProperties/Show";
+import Index from "@/Pages/OwnerPortal/MyProperties/Index";
+import Show from "@/Pages/OwnerPortal/MyProperties/Show";
 
-export default function MyProperties() {
+interface Props {
+    properties: any;
+}
+export default function MyProperties({ properties }: Props) {
     return (
         <AppLayout
             title="My Properties"

@@ -17,10 +17,12 @@ class PropertyController extends Controller
     public function index()
     {
         //
-        $user = Auth::user();
-        $properties = $user->properties;
-        return Inertia::render('MyProperties/Index', [
-            'properties' => $properties
+//        $user = Auth::user();
+//        $properties = $user->properties;
+        $properties=["name"=>"test name", "address"=>"test address"];
+
+        return Inertia::render('OwnerPortal/MyProperties', [
+            'properties' => $properties,
         ]);
     }
 

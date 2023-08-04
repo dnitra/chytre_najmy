@@ -3,6 +3,7 @@
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
+use App\Http\Controllers\PropertyController;
 
 /*
 |--------------------------------------------------------------------------
@@ -29,10 +30,14 @@ Route::middleware([
     config("jetstream.auth_session"),
     "verified",
 ])->group(function () {
-    Route::get("/dashboard", function () {
-        return Inertia::render("Dashboard");
+    Route::get("/owner-portal/dashboard", function () {
+        return Inertia::render("OwnerPortal/Dashboard");
     })->name("dashboard");
-    Route::get("/my-properties", function () {
-        return Inertia::render("MyProperties");
-    })->name("my-properties");
+//    Route::get("/owner-portal/my-properties", function () {
+//        return Inertia::render("OwnerPortal/MyProperties");
+//    })->name("my-properties");
+    Route::get("/owner-portal/my-properties", [PropertyController::class, "index"])->name("my-properties");
+//    Route::resource("ownedProperties", PropertyController::class);
+//    Route::get("/owner-portal/owned-properties", [PropertyController::class, "index"])->name("owned-properties");
+
 });
