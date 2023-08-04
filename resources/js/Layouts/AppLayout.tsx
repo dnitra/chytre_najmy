@@ -73,9 +73,9 @@ export default function AppLayout({
                                         Dashboard
                                     </NavLink>
                                     <NavLink
-                                        href={route("my-properties")}
+                                        href={route("my-properties.index")}
                                         active={route().current(
-                                            "my-properties"
+                                            "my-properties.index"
                                         )}
                                     >
                                         My Properties
@@ -351,8 +351,8 @@ export default function AppLayout({
                                 Dashboard
                             </ResponsiveNavLink>
                             <ResponsiveNavLink
-                                href={route("my-properties")}
-                                active={route().current("my-properties")}
+                                href={route("my-properties.index")}
+                                active={route().current("my-properties.index")}
                             >
                                 My Properties
                             </ResponsiveNavLink>
