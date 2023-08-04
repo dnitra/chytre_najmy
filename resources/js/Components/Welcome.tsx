@@ -10,15 +10,10 @@ export default function Welcome() {
                 <h1 className="mt-8 text-2xl font-medium text-gray-900">
                     This is the dashboard
                 </h1>
-                <div >
-                    <p className="mt-4 text-gray-600">
-
-                    </p>
+                <div>
+                    <p className="mt-4 text-gray-600"></p>
                 </div>
             </div>
-
-
-
         </div>
     );
 }
