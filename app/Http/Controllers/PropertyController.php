@@ -23,15 +23,17 @@ class PropertyController extends Controller
 
         return Inertia::render('OwnerPortal/MyProperties', [
             'properties' => $properties,
+            'lastVisitedProperty' => 2
         ]);
     }
+
 
     /**
      * Show the form for creating a new resource.
      */
     public function create()
     {
-
+        return Inertia::render('OwnerPortal/MyProperties/Create');
     }
 
     /**
@@ -45,9 +47,16 @@ class PropertyController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Property $property)
+    public function show(Property $property, $id)
     {
-        //
+        $properties = ["name" => "test name", "address" => "test address"];
+
+        $id = $id;
+
+        return Inertia::render('OwnerPortal/MyProperties/Show', [
+            'properties' => $properties,
+            'id' => $id,
+        ]);
     }
 
     /**

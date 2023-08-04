@@ -14,11 +14,13 @@ import { Team } from "@/types";
 
 interface Props {
     title: string;
+    activeProperty?: any;
     renderHeader?(): JSX.Element;
 }
 
 export default function AppLayout({
     title,
+    activeProperty,
     renderHeader,
     children,
 }: PropsWithChildren<Props>) {
@@ -73,9 +75,11 @@ export default function AppLayout({
                                         Dashboard
                                     </NavLink>
                                     <NavLink
-                                        href={route("my-properties.index")}
+                                        href={route("my-properties.show", [
+                                            activeProperty ? activeProperty : 1,
+                                        ])}
                                         active={route().current(
-                                            "my-properties.index"
+                                            "my-properties.show"
                                         )}
                                     >
                                         My Properties
@@ -351,8 +355,10 @@ export default function AppLayout({
                                 Dashboard
                             </ResponsiveNavLink>
                             <ResponsiveNavLink
-                                href={route("my-properties.index")}
-                                active={route().current("my-properties.index")}
+                                href={route("my-properties.show", [
+                                    activeProperty ? activeProperty : 1,
+                                ])}
+                                active={route().current("my-properties.show")}
                             >
                                 My Properties
                             </ResponsiveNavLink>
