@@ -16,17 +16,8 @@ class PropertyController extends Controller
      */
     public function index()
     {
-        //
-//        $user = Auth::user();
-//        $properties = $user->properties;
-        $properties=["name"=>"test name", "address"=>"test address"];
 
-        return Inertia::render('OwnerPortal/MyProperties', [
-            'properties' => $properties,
-            'lastVisitedProperty' => 2
-        ]);
     }
-
 
     /**
      * Show the form for creating a new resource.
@@ -49,13 +40,15 @@ class PropertyController extends Controller
      */
     public function show(Property $property, $id)
     {
-        $properties = ["name" => "test name", "address" => "test address"];
-
-        $id = $id;
+        $user = Auth::user();
+        $property = $user->properties()->findOrfail($id)->load('propertyType');
+        if($property){
+            $user->last_visited_property_id = $property->id;
+            $user->save();
+        }
 
         return Inertia::render('OwnerPortal/MyProperties/Show', [
-            'properties' => $properties,
-            'id' => $id,
+            'property' => $property,
         ]);
     }
 

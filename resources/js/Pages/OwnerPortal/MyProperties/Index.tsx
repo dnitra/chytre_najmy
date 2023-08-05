@@ -4,7 +4,7 @@ import route from "ziggy-js";
 
 export default function Index() {
     const { properties } = usePage().props;
-
+    console.log(usePage().props);
     console.log(properties);
 
     return (

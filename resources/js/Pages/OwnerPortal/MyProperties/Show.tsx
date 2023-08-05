@@ -4,10 +4,12 @@ import { usePage } from "@inertiajs/react";
 import AppLayout from "@/Layouts/AppLayout";
 
 const Show = () => {
-    const { id } = usePage().props;
+    const { auth, property } = usePage().props;
 
-    console.log(id);
-
+    console.log("last visited property:");
+    console.log(auth.user.last_visited_property_id);
+    console.log("current property:");
+    console.log(property);
     return <h1>Show Detail of Property</h1>;
 };
 

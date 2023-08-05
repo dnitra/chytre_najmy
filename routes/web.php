@@ -33,11 +33,5 @@ Route::middleware([
     Route::get("/owner-portal/dashboard", function () {
         return Inertia::render("OwnerPortal/Dashboard");
     })->name("dashboard");
-//    Route::get("/owner-portal/my-properties", function () {
-//        return Inertia::render("OwnerPortal/MyProperties");
-//    })->name("my-properties");
     Route::resource("/owner-portal/my-properties", PropertyController::class);
-//    Route::resource("ownedProperties", PropertyController::class);
-//    Route::get("/owner-portal/owned-properties", [PropertyController::class, "index"])->name("owned-properties");
-
 });
