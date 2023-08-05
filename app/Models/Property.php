@@ -10,6 +10,13 @@ class Property extends Model
 {
     use HasFactory;
 
+    protected $fillable = [
+        'name',
+        'property_type_id',
+        'address_id',
+        'user_id'
+    ];
+
     public function user()
     {
         return $this->belongsToMany(User::class);

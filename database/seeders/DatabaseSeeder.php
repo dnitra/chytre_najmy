@@ -18,18 +18,18 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-         \App\Models\User::factory(10)->create();
+        \App\Models\User::factory()->withPersonalTeam()->create([
+            'name' => 'Test User',
+            'email' => 'test@example.com',
+            'password' => bcrypt('12345678'),
+        ]);
+        \App\Models\User::factory(10)->withPersonalTeam()->create();
 
-         \App\Models\User::factory()->create([
-             'name' => 'Test User',
-             'email' => 'test@example.com',
-             'password' => bcrypt('12345678'),
-         ]);
-         Address::factory(15)->create();
+        Address::factory(15)->create();
             $this->call([
                 PropertyTypeSeeder::class,
                 CountrySeeder::class,
-                TeamSeeder::class,
+//                TeamSeeder::class,
                 PropertySeeder::class,
             ]);
     }

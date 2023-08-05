@@ -10,6 +10,12 @@ class Address extends Model
 {
     use HasFactory;
 
+    protected $fillable = [
+        'street_and_number',
+        'city',
+        'country_id',
+        'zip_code'
+    ];
     public function properties()
     {
         return $this->hasMany(Property::class);

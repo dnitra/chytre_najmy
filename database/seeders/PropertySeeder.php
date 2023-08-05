@@ -19,7 +19,7 @@ class PropertySeeder extends Seeder
             for($y = 1; $y <= 15; $y++) {
                 Property::factory()->create();
                 DB::table('property_user')->insert([
-                    'property_id' => $x,
+                    'property_id' => $x*15 - 15 + $y,
                     'user_id' => $y,
                 ]);
             }

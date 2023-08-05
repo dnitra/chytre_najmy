@@ -38,7 +38,13 @@ class HandleInertiaRequests extends Middleware
     {
         //properties with addesses
         return array_merge(parent::share($request), [
-            'myProperties' => auth()->user()? auth()->user()->properties()->with('address')->get(): null,
+            'myProperties' => auth()->user()?
+                auth()->user()->properties()->with('address')->get()
+                : null,
+            'flash' => [
+                'error' => fn () => $request->session()->get('error'),
+                'success' => fn () => $request->session()->get('success'),
+            ],
         ]);
     }
 }

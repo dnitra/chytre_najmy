@@ -8,6 +8,7 @@ use Inertia\Inertia;
 use App\Models\PropertyType;
 use App\Models\Country;
 use Illuminate\Support\Facades\Auth;
+use App\Models\Address;
 
 class PropertyController extends Controller
 {
@@ -32,7 +33,33 @@ class PropertyController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $user = Auth::user();
+        $address = Address::create($request->validate([
+            'city' => 'required|string|max:60',
+            'country_id' => 'required|integer',
+            'street_and_number' => 'required|string|max:60',
+            'zip_code' => 'required|integer|digits:5',
+        ]));
+        $property = new Property($request->validate([
+            'property_type_id' => 'required|integer',
+        ]));
+        $property->address_id = $address->id;
+        try {
+            $property->save();
+            $user->properties()->attach($property->id);
+
+        } catch (\Throwable $th) {
+            session()->flash('error', 'There was an error creating the property.');
+            return redirect()->back();
+        }
+        try {
+            $user->last_visited_property_id = $property->id;
+            $user->save();
+        } catch (\Throwable $th) {
+            session()->flash('error', 'Something went wrong.');
+        }
+        session()->flash('success', 'Property created successfully.');
+        return redirect()->route('my-properties.show', $property->id);
     }
 
     /**
@@ -41,12 +68,17 @@ class PropertyController extends Controller
     public function show(Property $property, $id)
     {
         $user = Auth::user();
-        $property = $user->properties()->findOrfail($id)->load('propertyType');
+        try {
+            $property = $user->properties()->findOrfail($id)->load('propertyType')->load('address');
+        } catch (\Throwable $th) {
+            $property = null;
+            session()->flash('error', 'You do not have access to that property.');
+            return redirect()->back();
+        }
         if($property){
             $user->last_visited_property_id = $property->id;
             $user->save();
         }
-
         return Inertia::render('OwnerPortal/MyProperties/Show', [
             'property' => $property,
         ]);
