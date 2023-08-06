@@ -14,11 +14,13 @@ import { Team } from "@/types";
 
 interface Props {
     title: string;
+    activeProperty?: any;
     renderHeader?(): JSX.Element;
 }
 
 export default function AppLayout({
     title,
+    activeProperty,
     renderHeader,
     children,
 }: PropsWithChildren<Props>) {
@@ -71,6 +73,20 @@ export default function AppLayout({
                                         active={route().current("dashboard")}
                                     >
                                         Dashboard
+                                    </NavLink>
+                                    <NavLink
+                                        href={route("my-properties.show", [
+                                            page.props.auth.user
+                                                .last_visited_property_id
+                                                ? page.props.auth.user
+                                                      .last_visited_property_id
+                                                : page.props.myProperties[0].id,
+                                        ])}
+                                        active={route().current(
+                                            "my-properties.show"
+                                        )}
+                                    >
+                                        My Properties
                                     </NavLink>
                                 </div>
                             </div>
@@ -342,6 +358,14 @@ export default function AppLayout({
                             >
                                 Dashboard
                             </ResponsiveNavLink>
+                            <ResponsiveNavLink
+                                href={route("my-properties.show", [
+                                    activeProperty ? activeProperty : 1,
+                                ])}
+                                active={route().current("my-properties.show")}
+                            >
+                                My Properties
+                            </ResponsiveNavLink>
                         </div>
 
                         {/* <!-- Responsive Settings Options --> */}
@@ -483,6 +507,31 @@ export default function AppLayout({
                             {renderHeader()}
                         </div>
                     </header>
+                ) : null}
+
+                {/* <!-- Flash Messages --> */}
+                {page.props.flash.success ? (
+                    <div
+                        className="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative"
+                        role="alert"
+                    >
+                        <strong className="font-bold">Success! </strong>
+                        <span className="block sm:inline">
+                            {page.props.flash.success}
+                        </span>
+                    </div>
+                ) : null}
+
+                {page.props.flash.error ? (
+                    <div
+                        className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative"
+                        role="alert"
+                    >
+                        <strong className="font-bold">Error! </strong>
+                        <span className="block sm:inline">
+                            {page.props.flash.error}
+                        </span>
+                    </div>
                 ) : null}
 
                 {/* <!-- Page Content --> */}
