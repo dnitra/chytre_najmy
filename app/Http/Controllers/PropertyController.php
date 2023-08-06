@@ -104,7 +104,17 @@ class PropertyController extends Controller
      */
     public function update(Request $request, Property $property)
     {
-        //
+        $property->update($request->validate([
+            'property_type_id' => 'nullable|integer',
+        ]));
+        $property->address->update($request->validate([
+            'city' => 'required|string|max:60',
+            'country_id' => 'required|integer',
+            'street_and_number' => 'nullable|string|max:60',
+            'zip_code' => 'nullable|integer|digits:5',
+        ]));
+        session()->flash('success', 'Property updated successfully.');
+        return redirect()->route('my-properties.show', $property->id);
     }
 
     /**
@@ -112,6 +122,11 @@ class PropertyController extends Controller
      */
     public function destroy(Property $property)
     {
-        //
+        $property->delete();
+        $user = Auth::user();
+        $user->last_visited_property_id = null;
+        $user->save();
+        session()->flash('success', 'Property deleted successfully.');
+        return redirect()->route('my-properties.index');
     }
 }
