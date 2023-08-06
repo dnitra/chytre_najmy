@@ -76,13 +76,19 @@ export default function AppLayout({
                                         href={
                                             page.props.myProperties.length > 0
                                                 ? route("my-properties.show", [
-                                                    page.props.auth.user.last_visited_property_id
-                                                        ? page.props.auth.user.last_visited_property_id
-                                                        : page.props.myProperties[0].id,
-                                                ])
+                                                      page.props.auth.user
+                                                          .last_visited_property_id
+                                                          ? page.props.auth.user
+                                                                .last_visited_property_id
+                                                          : page.props
+                                                                .myProperties[0]
+                                                                .id,
+                                                  ])
                                                 : route("my-properties.index")
                                         }
-                                        active={route().current("my-properties.show")}
+                                        active={route().current(
+                                            "my-properties.show"
+                                        )}
                                     >
                                         My Properties
                                     </NavLink>
@@ -360,10 +366,13 @@ export default function AppLayout({
                                 href={
                                     page.props.myProperties.length > 0
                                         ? route("my-properties.show", [
-                                            page.props.auth.user.last_visited_property_id
-                                                ? page.props.auth.user.last_visited_property_id
-                                                : page.props.myProperties[0].id,
-                                        ])
+                                              page.props.auth.user
+                                                  .last_visited_property_id
+                                                  ? page.props.auth.user
+                                                        .last_visited_property_id
+                                                  : page.props.myProperties[0]
+                                                        .id,
+                                          ])
                                         : route("my-properties.index")
                                 }
                                 active={route().current("my-properties.show")}
