@@ -4,13 +4,24 @@ import { usePage } from "@inertiajs/react";
 import AppLayout from "@/Layouts/AppLayout";
 
 const Show = () => {
-    const { auth, property } = usePage().props;
-
-    console.log("last visited property:");
-    console.log(auth.user.last_visited_property_id);
-    console.log("current property:");
+    const { property } = usePage().props;
     console.log(property);
-    return <h1>Show Detail of Property</h1>;
+
+    return (
+        <>
+            <h1 className="font-semibold text-2xl text-gray-800 leading-tight">
+                Property Details
+            </h1>
+            {/*smaller*/}
+            <h2 className="font-semibold text-xl text-gray-800 leading-tight">
+                {property.name}
+            </h2>
+            {/*smaller*/}
+            <h2 className="font-semibold text-xl text-gray-800 leading-tight">
+                {property.address.street_and_number}
+            </h2>
+        </>
+    );
 };
 
 Show.layout = (page: any) => (

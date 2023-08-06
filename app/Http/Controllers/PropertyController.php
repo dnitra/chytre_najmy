@@ -25,7 +25,10 @@ class PropertyController extends Controller
      */
     public function create()
     {
-        return Inertia::render('OwnerPortal/MyProperties/Create');
+        return Inertia::render('OwnerPortal/MyProperties/Create', [
+            'propertyTypes' => PropertyType::all(),
+            'countries' => Country::all(),
+        ]);
     }
 
     /**
@@ -34,14 +37,14 @@ class PropertyController extends Controller
     public function store(Request $request)
     {
         $user = Auth::user();
+        $property = new Property($request->validate([
+            'property_type_id' => 'nullable|integer',
+        ]));
         $address = Address::create($request->validate([
             'city' => 'required|string|max:60',
             'country_id' => 'required|integer',
-            'street_and_number' => 'required|string|max:60',
-            'zip_code' => 'required|integer|digits:5',
-        ]));
-        $property = new Property($request->validate([
-            'property_type_id' => 'required|integer',
+            'street_and_number' => 'nullable|string|max:60',
+            'zip_code' => 'nullable|integer|digits:5',
         ]));
         $property->address_id = $address->id;
         try {
@@ -89,7 +92,11 @@ class PropertyController extends Controller
      */
     public function edit(Property $property)
     {
-        //
+        return Inertia::render('OwnerPortal/MyProperties/Edit', [
+            'property' => $property,
+            'propertyTypes' => PropertyType::all(),
+            'countries' => Country::all(),
+        ]);
     }
 
     /**

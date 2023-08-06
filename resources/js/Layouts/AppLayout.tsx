@@ -76,7 +76,11 @@ export default function AppLayout({
                                     </NavLink>
                                     <NavLink
                                         href={route("my-properties.show", [
-                                            activeProperty ? activeProperty : 1,
+                                            page.props.auth.user
+                                                .last_visited_property_id
+                                                ? page.props.auth.user
+                                                      .last_visited_property_id
+                                                : page.props.myProperties[0].id,
                                         ])}
                                         active={route().current(
                                             "my-properties.show"

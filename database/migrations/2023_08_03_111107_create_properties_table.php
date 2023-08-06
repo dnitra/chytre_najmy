@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string("name", 50)->nullable();
             $table->unsignedBigInteger("address_id")->index();;
-            $table->unsignedBigInteger("property_type_id")->index();;
+            $table->unsignedBigInteger("property_type_id")->nullable()->index();;
             $table->unsignedBigInteger("parent_id")->nullable();
             $table->tinyInteger("published")->nullable()->index();
             $table->tinyInteger("active")->nullable();
