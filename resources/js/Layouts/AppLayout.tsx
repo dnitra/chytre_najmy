@@ -20,7 +20,6 @@ interface Props {
 
 export default function AppLayout({
     title,
-    activeProperty,
     renderHeader,
     children,
 }: PropsWithChildren<Props>) {
@@ -28,7 +27,6 @@ export default function AppLayout({
     const route = useRoute();
     const [showingNavigationDropdown, setShowingNavigationDropdown] =
         useState(false);
-
     function switchToTeam(e: React.FormEvent, team: Team) {
         e.preventDefault();
         router.put(
@@ -75,16 +73,16 @@ export default function AppLayout({
                                         Dashboard
                                     </NavLink>
                                     <NavLink
-                                        href={route("my-properties.show", [
-                                            page.props.auth.user
-                                                .last_visited_property_id
-                                                ? page.props.auth.user
-                                                      .last_visited_property_id
-                                                : page.props.myProperties[0].id,
-                                        ])}
-                                        active={route().current(
-                                            "my-properties.show"
-                                        )}
+                                        href={
+                                            page.props.myProperties.length > 0
+                                                ? route("my-properties.show", [
+                                                    page.props.auth.user.last_visited_property_id
+                                                        ? page.props.auth.user.last_visited_property_id
+                                                        : page.props.myProperties[0].id,
+                                                ])
+                                                : route("my-properties.index")
+                                        }
+                                        active={route().current("my-properties.show")}
                                     >
                                         My Properties
                                     </NavLink>
@@ -359,9 +357,15 @@ export default function AppLayout({
                                 Dashboard
                             </ResponsiveNavLink>
                             <ResponsiveNavLink
-                                href={route("my-properties.show", [
-                                    activeProperty ? activeProperty : 1,
-                                ])}
+                                href={
+                                    page.props.myProperties.length > 0
+                                        ? route("my-properties.show", [
+                                            page.props.auth.user.last_visited_property_id
+                                                ? page.props.auth.user.last_visited_property_id
+                                                : page.props.myProperties[0].id,
+                                        ])
+                                        : route("my-properties.index")
+                                }
                                 active={route().current("my-properties.show")}
                             >
                                 My Properties
