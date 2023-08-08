@@ -10,6 +10,8 @@ use Illuminate\Database\Seeder;
 use App\Models\Property;
 use App\Models\Country;
 use App\Models\Team;
+use App\Models\ImageCategory;
+use App\Models\User;
 
 class DatabaseSeeder extends Seeder
 {
@@ -18,19 +20,19 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        \App\Models\User::factory()->withPersonalTeam()->create([
+        User::factory()->withPersonalTeam()->create([
             'name' => 'Test User',
             'email' => 'test@example.com',
             'password' => bcrypt('12345678'),
         ]);
-        \App\Models\User::factory(10)->withPersonalTeam()->create();
+       User::factory(10)->withPersonalTeam()->create();
 
         Address::factory(15)->create();
             $this->call([
                 PropertyTypeSeeder::class,
                 CountrySeeder::class,
-//                TeamSeeder::class,
                 PropertySeeder::class,
+                ImageCategorySeeder::class,
             ]);
     }
 }

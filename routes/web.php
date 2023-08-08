@@ -4,6 +4,7 @@ use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 use App\Http\Controllers\PropertyController;
+use App\Http\Controllers\ImageController;
 
 /*
 |--------------------------------------------------------------------------
@@ -34,4 +35,5 @@ Route::middleware([
         return Inertia::render("OwnerPortal/Dashboard");
     })->name("dashboard");
     Route::resource("/owner-portal/my-properties", PropertyController::class);
+    Route::resource("images", ImageController::class);
 });
