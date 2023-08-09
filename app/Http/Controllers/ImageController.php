@@ -11,38 +11,30 @@ class ImageController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index($category, $id)
+    public function index($propertyId, $categoryId)
     {
         //list all images for a given category and property
-        $images = Image::where('image_category_id', $category)
-            ->where('rented_property_id', $id)
+        $images = Image::where('image_category_id', $categoryId)
+            ->where('property_id', $propertyId)
             ->select('image_path', 'name')
             ->get();
 
-        return response()->json([
-            'success' => true,
-            'data' => $images
+        return Inertia::render('Shared/Image/Index', [
+            'images' => $images,
+            'categoryId' => $categoryId,
+            'propertyId' => $propertyId,
         ]);
     }
 
     /**
      * Show the form for creating a new resource.
      */
-    public function create(Request $request)
-    {
-        $propertyId = $request->propertyId;
-        $category = $request->category;
+    public function create($propertyId, $categoryId){
 
-        return response()->json(
-            [
-                'success' => true,
-                'data' => [
-                    'category' => $category,
-                    'propertyId' => $propertyId
-                ]
-            ]
-        );
-
+        return Inertia::render('Shared/Image/Create', [
+            'propertyId' => $propertyId,
+            'categoryId' => $categoryId
+        ]);
     }
 
     /**
@@ -53,54 +45,62 @@ class ImageController extends Controller
         $request->validate([
             'name' => 'required',
             'description' => 'required',
-            'image_category_id' => 'required',
-            'rented_property_id' => 'required',
-            'image_data' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'categoryId' => 'required',
+            'propertyId' => 'required',
+            'imageData' => 'required|image|mimes:jpeg,png,jpg|max:2048',
         ]);
 
         $image = $request->file('image_data');
         $imageName = time() . '.' . $image->extension();
         $path = "images/properties/" .
-            $request->rented_property_id . "/" .
-            $request->image_category_id . "/" .
+            $request->propertyId . "/" .
+            $request->categoryId . "/" .
             $imageName;
         $image->storeAs("public", $path);
 
         $image = Image::create([
             'name' => $request->name,
             'description' => $request->description,
-            'rented_property_id' => $request->rented_property_id,
-            'image_category_id' => $request->image_category_id,
+            'property_id' => $request->propertyId,
+            'image_category_id' => $request->categoryId,
             'image_path' => $path,
         ]);
 
-        return response()->json([
-            'success' => true,
+        return Inertia::render('Shared/Image/Index', [
+            'image_category_id' => $request->categoryId,
+            'propertyId' => $request->propertyId
         ]);
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(Request $request)
+    public function show($propertyId, $categoryId, $imageId)
     {
-        //display a single image
-        $image = Image::where('id', $request->id)
+        $image = Image::where('id', $imageId)
+            ->where('image_category_id', $categoryId)
+            ->where('property_id', $propertyId)
             ->select('image_path', 'name')
             ->get();
-        return response()->json([
-            'success' => true,
-               'data' => $image
-        ]);
-
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit($propertyId, $categoryId, $imageId)
     {
-        //
+        $image = Image::where('id', $imageId)
+            ->where('image_category_id', $categoryId)
+            ->where('property_id', $propertyId)
+            ->select('image_path', 'name')
+            ->get();
+
+        return Inertia::render('Shared/Image/Edit', [
+            'image' => $image,
+            'propertyId' => $propertyId,
+            'categoryId' => $categoryId
+        ]);
+
     }
 
     /**
