@@ -10,7 +10,6 @@ use Illuminate\Database\Seeder;
 use App\Models\Property;
 use App\Models\Country;
 use App\Models\Team;
-use App\Models\ImageCategory;
 use App\Models\User;
 
 class DatabaseSeeder extends Seeder
@@ -32,7 +31,6 @@ class DatabaseSeeder extends Seeder
                 PropertyTypeSeeder::class,
                 CountrySeeder::class,
                 PropertySeeder::class,
-                ImageCategorySeeder::class,
             ]);
     }
 }

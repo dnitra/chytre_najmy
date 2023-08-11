@@ -15,8 +15,6 @@ return new class extends Migration
             $table->id();
             $table->string('name')->nullable();
             $table->string('description')->nullable();
-            $table->unsignedBigInteger('rented_property_id');
-            $table->unsignedBigInteger('image_category_id');
             $table->string('image_path');
             $table->timestamps();
         });
