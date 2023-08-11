@@ -2,6 +2,7 @@ import { Link, usePage } from "@inertiajs/react";
 import route from "ziggy-js";
 import PropertyCardSmall from "@/Pages/OwnerPortal/MyProperties/PropertyCardSmall";
 import React from "react";
+import AppLayout from '@/Layouts/AppLayout';
 
 type MyProperties = {
     id: number;
@@ -15,7 +16,7 @@ type MyProperties = {
     };
 };
 
-export default function Index() {
+function Index() {
     const { myProperties } = usePage().props as unknown as {
         myProperties: Array<MyProperties>;
     };
@@ -33,13 +34,36 @@ export default function Index() {
                 </Link>
             </div>
             {myProperties.map((property: any) => (
-                <PropertyCardSmall
+                <Link
                     key={property.id}
-                    id={property.id}
-                    name={property.name}
-                    street_and_number={property.address.street_and_number}
-                />
+                    href={route("my-properties.show", property.id)}
+                    only={["property"]}
+                    preserveScroll
+                    preserveState
+                >
+                    <PropertyCardSmall
+                        name={property.name}
+                        street_and_number={property.address.street_and_number}
+                        city={property.address.city}
+                    />
+                </Link>
             ))}
         </div>
     );
 }
+
+Index.layout = (page: any) => (
+    <AppLayout
+        title="My Properties"
+        renderHeader={() => (
+            <h2 className="font-semibold text-xl text-gray-800 leading-tight">
+                My Properties
+            </h2>
+
+        )}
+    >
+        {page}
+    </AppLayout>
+);
+
+export default Index;
