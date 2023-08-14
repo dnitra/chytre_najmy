@@ -17,6 +17,7 @@ class CreateNewUser implements CreatesNewUsers
 {
     use PasswordValidationRules;
 
+
     /**
      * Create a newly registered user.
      *
@@ -66,7 +67,7 @@ class CreateNewUser implements CreatesNewUsers
             ])
         );
         app(PermissionRegistrar::class)->setPermissionsTeamId($team->id);
-        $role = Role::create(['name' => 'owner','team_id'=> $team->id]);
+        $role = Role::create(['name' => 'owner','team_id'=> $team->id,'guard_name' => 'web']);
         $allPerrmissions = Permission::all();
         $role->syncPermissions($allPerrmissions);
         $user->syncRoles([$role->id]);

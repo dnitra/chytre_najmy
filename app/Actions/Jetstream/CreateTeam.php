@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Validator;
 use Laravel\Jetstream\Contracts\CreatesTeams;
 use Laravel\Jetstream\Events\AddingTeam;
 use Laravel\Jetstream\Jetstream;
+use Spatie\Permission\Models\Permission;
 use Spatie\Permission\Models\Role;
 
 class CreateTeam implements CreatesTeams
@@ -39,11 +40,10 @@ class CreateTeam implements CreatesTeams
         setPermissionsTeamId($team->id);
         $user = Auth::user();
         $user->unsetRelation('roles','permissions');
-        $role = Role::where('name', 'owner')->first();
-        $user->assignRole($role);
-        $permissions = $user->getAllPermissions();
-        $user->setRelation('roles', $permissions->pluck('roles')->flatten()->unique());
-        $user->setRelation('permissions', $permissions->pluck('name')->flatten()->unique());
+        $role = Role::create(['name' => 'owner','team_id'=> $team->id,'guard_name' => 'web']);
+        $allPerrmissions = Permission::all();
+        $role->syncPermissions($allPerrmissions);
+        $user->syncRoles([$role->id]);
 
         return $team;
     }
