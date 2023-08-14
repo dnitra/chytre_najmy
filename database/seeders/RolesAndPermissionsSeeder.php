@@ -18,23 +18,13 @@ class RolesAndPermissionsSeeder extends Seeder
         app()[\Spatie\Permission\PermissionRegistrar::class]->forgetCachedPermissions();
 
         $propertyPermission = ['create property types', 'view property types', 'edit property types', 'delete property types'];
-        $userPermission = ['create users', 'view users', 'edit users', 'delete users'];
-        $ownerRole = Role::create(['name' => 'owner']);
-        $mangerRole = Role::create(['name' => 'manager']);
-        $agentRole = Role::create(['name' => 'agent']);
+        $teamPerrmissions = ['create teams', 'view teams', 'edit teams', 'delete teams', 'add team members', 'update team members', 'delete team members'];
 
         foreach ($propertyPermission as $permission) {
-            $permission = Permission::create(['name' => $permission]);
-            $ownerRole->givePermissionTo($permission);
-            $mangerRole->givePermissionTo($permission);
-            $agentRole->givePermissionTo($permission);
+            Permission::findOrCreate($permission);
         }
-        foreach ($userPermission as $permission) {
-            $permission = Permission::create(['name' => $permission]);
-            $ownerRole->givePermissionTo($permission);
-            if ($permission !== 'delete users') {
-                $mangerRole->givePermissionTo($permission);
-            }
+        foreach ($teamPerrmissions as $permission) {
+            Permission::findOrCreate($permission);
         }
 
     }

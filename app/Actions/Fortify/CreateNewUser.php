@@ -9,6 +9,9 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Laravel\Fortify\Contracts\CreatesNewUsers;
 use Laravel\Jetstream\Jetstream;
+use Spatie\Permission\Models\Permission;
+use Spatie\Permission\Models\Role;
+use Spatie\Permission\PermissionRegistrar;
 
 class CreateNewUser implements CreatesNewUsers
 {
@@ -56,11 +59,16 @@ class CreateNewUser implements CreatesNewUsers
     protected function createTeam(User $user): void
     {
         $user->ownedTeams()->save(
-            Team::forceCreate([
+            $team = Team::forceCreate([
                 "user_id" => $user->id,
-                "name" => explode(" ", $user->name, 2)[0] . "'s Team",
+                "name" => "{$user->name}'s portfolio",
                 "personal_team" => true,
             ])
         );
+        app(PermissionRegistrar::class)->setPermissionsTeamId($team->id);
+        $role = Role::create(['name' => 'owner','team_id'=> $team->id]);
+        $allPerrmissions = Permission::all();
+        $role->syncPermissions($allPerrmissions);
+        $user->syncRoles([$role->id]);
     }
 }

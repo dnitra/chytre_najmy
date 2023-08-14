@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 use App\Http\Controllers\PropertyController;
 use App\Http\Controllers\ImageController;
+use App\Http\Controllers\UpdateCurrentUserTeam;
 
 /*
 |--------------------------------------------------------------------------
@@ -36,4 +37,13 @@ Route::middleware([
     })->name("dashboard");
     Route::resource("/owner-portal/my-properties", PropertyController::class);
     Route::resource("images", ImageController::class);
+//    class UpdateCurrentUserTeam extends Controller
+//{
+//    /**
+//     * Handle the incoming request.
+//     */
+//    public function __invoke(Request $request)
+//    {
+    Route::get("/updateUserCurrentTeam", UpdateCurrentUserTeam::class)->name('update-user-curent-team');
+
 });

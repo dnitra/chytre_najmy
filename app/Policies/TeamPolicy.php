@@ -9,7 +9,6 @@ use Illuminate\Auth\Access\HandlesAuthorization;
 class TeamPolicy
 {
     use HandlesAuthorization;
-
     /**
      * Determine whether the user can view any models.
      */
@@ -23,7 +22,13 @@ class TeamPolicy
      */
     public function view(User $user, Team $team): bool
     {
-        return $user->belongsToTeam($team);
+        $userRoleInTeam= $user->roles->where('team_id', $team->id)->first();
+        if($userRoleInTeam){
+            $rolePerrmission = $userRoleInTeam->permissions->pluck('name')->toArray();
+            return in_array('view teams', $rolePerrmission);
+        }
+        return false;
+
     }
 
     /**
@@ -39,7 +44,7 @@ class TeamPolicy
      */
     public function update(User $user, Team $team): bool
     {
-        return $user->ownsTeam($team);
+        return $user->ownsTeam($team) || $user->can('edit teams', $team);
     }
 
     /**
@@ -47,7 +52,7 @@ class TeamPolicy
      */
     public function addTeamMember(User $user, Team $team): bool
     {
-        return $user->ownsTeam($team);
+        return $user->ownsTeam($team) || $user->can('add team members', $team);
     }
 
     /**
@@ -55,7 +60,7 @@ class TeamPolicy
      */
     public function updateTeamMember(User $user, Team $team): bool
     {
-        return $user->ownsTeam($team);
+        return $user->ownsTeam($team) || $user->can('update team members', $team);
     }
 
     /**
@@ -63,7 +68,7 @@ class TeamPolicy
      */
     public function removeTeamMember(User $user, Team $team): bool
     {
-        return $user->ownsTeam($team);
+        return $user->ownsTeam($team) || $user->can('delete team members', $team);
     }
 
     /**
@@ -71,6 +76,6 @@ class TeamPolicy
      */
     public function delete(User $user, Team $team): bool
     {
-        return $user->ownsTeam($team);
+        return $user->ownsTeam($team) || $user->can('delete teams', $team);
     }
 }

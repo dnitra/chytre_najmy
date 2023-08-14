@@ -29,8 +29,9 @@ export default function AppLayout({
         useState(false);
     function switchToTeam(e: React.FormEvent, team: Team) {
         e.preventDefault();
-        router.put(
-            route("current-team.update"),
+        console.log("switching to team", team);
+        router.get(
+            route("update-user-curent-team"),
             {
                 team_id: team.id,
             },
