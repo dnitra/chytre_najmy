@@ -31,8 +31,8 @@ export default function UpdateTeamNameForm({ team, permissions }: Props) {
     return (
         <FormSection
             onSubmit={updateTeamName}
-            title={"Team Name"}
-            description={`The team's name and owner information.`}
+            title={"Portfolio Name"}
+            description={`Portfolio's name and owner information.`}
             renderActions={
                 permissions.canUpdateTeam
                     ? () => (
@@ -59,7 +59,7 @@ export default function UpdateTeamNameForm({ team, permissions }: Props) {
         >
             {/* <!-- Team Owner Information --> */}
             <div className="col-span-6">
-                <InputLabel value="Team Owner" />
+                <InputLabel value="Portfolio Owner" />
 
                 <div className="flex items-center mt-2">
                     <img
@@ -79,7 +79,7 @@ export default function UpdateTeamNameForm({ team, permissions }: Props) {
 
             {/* <!-- Team Name --> */}
             <div className="col-span-6 sm:col-span-4">
-                <InputLabel htmlFor="name" value="Team Name" />
+                <InputLabel htmlFor="name" value="Portfolio Name" />
 
                 <TextInput
                     id="name"

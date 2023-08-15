@@ -9,6 +9,7 @@ use Illuminate\Auth\Access\HandlesAuthorization;
 class TeamPolicy
 {
     use HandlesAuthorization;
+
     /**
      * Determine whether the user can view any models.
      */
@@ -22,13 +23,7 @@ class TeamPolicy
      */
     public function view(User $user, Team $team): bool
     {
-        $userRoleInTeam= $user->roles->where('team_id', $team->id)->first();
-        if($userRoleInTeam){
-            $rolePerrmission = $userRoleInTeam->permissions->pluck('name')->toArray();
-            return in_array('view teams', $rolePerrmission);
-        }
-        return false;
-
+        return $this->hasPermission($user, $team, 'view teams');
     }
 
     /**
@@ -44,7 +39,7 @@ class TeamPolicy
      */
     public function update(User $user, Team $team): bool
     {
-        return $user->ownsTeam($team) || $user->can('edit teams', $team);
+        return $this->hasPermission($user, $team, 'update teams');
     }
 
     /**
@@ -52,7 +47,7 @@ class TeamPolicy
      */
     public function addTeamMember(User $user, Team $team): bool
     {
-        return $user->ownsTeam($team) || $user->can('add team members', $team);
+        return $this->hasPermission($user, $team, 'add team members');
     }
 
     /**
@@ -60,7 +55,7 @@ class TeamPolicy
      */
     public function updateTeamMember(User $user, Team $team): bool
     {
-        return $user->ownsTeam($team) || $user->can('update team members', $team);
+        return $this->hasPermission($user, $team, 'update team members');
     }
 
     /**
@@ -68,7 +63,7 @@ class TeamPolicy
      */
     public function removeTeamMember(User $user, Team $team): bool
     {
-        return $user->ownsTeam($team) || $user->can('delete team members', $team);
+        return $this->hasPermission($user, $team, 'remove team members');
     }
 
     /**
@@ -76,6 +71,25 @@ class TeamPolicy
      */
     public function delete(User $user, Team $team): bool
     {
-        return $user->ownsTeam($team) || $user->can('delete teams', $team);
+        return $this->hasPermission($user, $team, 'delete teams');
+    }
+
+    /**
+     * Check if the user has a specific permission for the team.
+     */
+    private function hasPermission(User $user, Team $team, string $permissionName): bool
+    {
+        $userRoleInTeam = $user->roles->where('team_id', $team->id)->first();
+        if ($userRoleInTeam) {
+            $rolePermissions = $userRoleInTeam->permissions->pluck('name')->toArray();
+            return in_array($permissionName, $rolePermissions);
+        }
+
+        $userPerrmissions = $user->permissions->where('name', $permissionName)->first();
+        if ($userPerrmissions) {
+            return true;
+        }
+
+        return false;
     }
 }
