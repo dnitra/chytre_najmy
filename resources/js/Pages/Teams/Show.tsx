@@ -11,6 +11,7 @@ import {
     User,
 } from "@/types";
 import React from "react";
+import { usePage } from '@inertiajs/react';
 
 interface UserMembership extends User {
     membership: {
@@ -29,12 +30,13 @@ interface Props {
 }
 
 export default function Show({ team, availableRoles, permissions }: Props) {
+    console.log(usePage().props)
     return (
         <AppLayout
             title="Team Settings"
             renderHeader={() => (
                 <h2 className="font-semibold text-xl text-gray-800 leading-tight">
-                    Team Settings
+                    Portfolio Settings
                 </h2>
             )}
         >

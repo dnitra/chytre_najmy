@@ -9,7 +9,8 @@ use Illuminate\Auth\Access\HandlesAuthorization;
 class TeamPolicy
 {
     use HandlesAuthorization;
-
+//$propertyPermission = ['canCreatePropertyTypes', 'canViewPropertyTypes', 'canEditPropertyTypes', 'canDeletePropertyTypes'];
+//$teamPerrmissions = ['canCreateTeams', 'canViewTeams', 'canEditTeams', 'canDeleteTeams', 'canAddTeamMembers', 'canUpdateTeamMembers', 'canDeleteTeamMembers'];
     /**
      * Determine whether the user can view any models.
      */
@@ -23,7 +24,7 @@ class TeamPolicy
      */
     public function view(User $user, Team $team): bool
     {
-        return $this->hasPermission($user, $team, 'view teams');
+        return $this->hasPermission($user, $team, 'canViewTeams');
     }
 
     /**
@@ -39,7 +40,7 @@ class TeamPolicy
      */
     public function update(User $user, Team $team): bool
     {
-        return $this->hasPermission($user, $team, 'update teams');
+        return $this->hasPermission($user, $team, 'canEditTeams');
     }
 
     /**
@@ -47,7 +48,7 @@ class TeamPolicy
      */
     public function addTeamMember(User $user, Team $team): bool
     {
-        return $this->hasPermission($user, $team, 'add team members');
+        return $this->hasPermission($user, $team, 'canAddTeamMembers');
     }
 
     /**
@@ -55,7 +56,7 @@ class TeamPolicy
      */
     public function updateTeamMember(User $user, Team $team): bool
     {
-        return $this->hasPermission($user, $team, 'update team members');
+        return $this->hasPermission($user, $team, 'canUpdateTeamMembers');
     }
 
     /**
@@ -63,7 +64,7 @@ class TeamPolicy
      */
     public function removeTeamMember(User $user, Team $team): bool
     {
-        return $this->hasPermission($user, $team, 'remove team members');
+        return $this->hasPermission($user, $team, 'canDeleteTeamMembers');
     }
 
     /**
@@ -71,7 +72,7 @@ class TeamPolicy
      */
     public function delete(User $user, Team $team): bool
     {
-        return $this->hasPermission($user, $team, 'delete teams');
+        return $this->hasPermission($user, $team, 'canDeleteTeams');
     }
 
     /**

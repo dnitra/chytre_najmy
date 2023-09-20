@@ -4,6 +4,7 @@ namespace App\Http\Middleware;
 
 use Illuminate\Http\Request;
 use Inertia\Middleware;
+use Spatie\Permission\PermissionRegistrar;
 
 class HandleInertiaRequests extends Middleware
 {
@@ -36,15 +37,18 @@ class HandleInertiaRequests extends Middleware
      */
     public function share(Request $request): array
     {
-        //properties with addesses
+        $user = auth()->user();
+        $roles = $user ? $user->roles->pluck('name')->mapWithKeys(fn ($role) => ["is" . ucfirst($role) => true]) : [];
+        $permissions = $user ? $user->getPermissionsViaRoles()->pluck('name')->mapWithKeys(fn ($permission) => [$permission => true]) : [];
         return array_merge(parent::share($request), [
-            'myProperties' => auth()->user()?
-                auth()->user()->properties()->with('address')->get()
-                : null,
+            'myProperties' => $user?->properties()->with('address')->get(),
             'flash' => [
                 'error' => fn () => $request->session()->get('error'),
                 'success' => fn () => $request->session()->get('success'),
             ],
+            'auth.user.roles' => $roles,
+            'auth.user.permissions' => $permissions,
         ]);
+
     }
 }

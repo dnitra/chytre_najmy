@@ -17,9 +17,8 @@ class RolesAndPermissionsSeeder extends Seeder
         // Reset cached roles and permissions
         app()[\Spatie\Permission\PermissionRegistrar::class]->forgetCachedPermissions();
 
-        $propertyPermission = ['create property types', 'view property types', 'edit property types', 'delete property types'];
-        $teamPerrmissions = ['create teams', 'view teams', 'edit teams', 'delete teams', 'add team members', 'update team members', 'delete team members'];
-
+        $propertyPermission = ['canCreatePropertyTypes', 'canViewPropertyTypes', 'canEditPropertyTypes', 'canDeletePropertyTypes'];
+        $teamPerrmissions = ['canCreateTeams', 'canViewTeams', 'canEditTeams', 'canDeleteTeams', 'canAddTeamMembers', 'canUpdateTeamMembers', 'canDeleteTeamMembers'];
         foreach ($propertyPermission as $permission) {
             Permission::findOrCreate($permission);
         }
