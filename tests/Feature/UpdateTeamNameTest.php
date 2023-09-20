@@ -8,10 +8,11 @@ use Tests\TestCase;
 
 class UpdateTeamNameTest extends TestCase
 {
-//    use RefreshDatabase;
-//
-//    public function test_team_names_can_be_updated(): void
-//    {
+    use RefreshDatabase;
+
+    public function test_team_names_can_be_updated(): void
+    {
+        $this->markTestSkipped("This test has not been implemented yet.");
 //        $this->actingAs(
 //            $user = User::factory()
 //                ->withPersonalTeam()
@@ -24,5 +25,5 @@ class UpdateTeamNameTest extends TestCase
 //
 //        $this->assertCount(1, $user->fresh()->ownedTeams);
 //        $this->assertEquals("Test Team", $user->currentTeam->fresh()->name);
-//    }
+    }
 }

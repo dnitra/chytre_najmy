@@ -8,10 +8,12 @@ use Tests\TestCase;
 
 class RemoveTeamMemberTest extends TestCase
 {
-//    use RefreshDatabase;
-//
-//    public function test_team_members_can_be_removed_from_teams(): void
-//    {
+    use RefreshDatabase;
+
+    public function test_team_members_can_be_removed_from_teams(): void
+    {
+        $this->markTestSkipped("This test has not been implemented yet.");
+
 //        $this->actingAs(
 //            $user = User::factory()
 //                ->withPersonalTeam()
@@ -29,10 +31,12 @@ class RemoveTeamMemberTest extends TestCase
 //        );
 //
 //        $this->assertCount(0, $user->currentTeam->fresh()->users);
-//    }
+    }
 //
-//    public function test_only_team_owner_can_remove_team_members(): void
-//    {
+    public function test_only_team_owner_can_remove_team_members(): void
+    {
+        $this->markTestSkipped("This test has not been implemented yet.");
+
 //        $user = User::factory()
 //            ->withPersonalTeam()
 //            ->create();
@@ -50,5 +54,5 @@ class RemoveTeamMemberTest extends TestCase
 //        );
 //
 //        $response->assertStatus(403);
-//    }
+    }
 }

@@ -16,7 +16,7 @@ class PropertySeeder extends Seeder
     public function run(): void
     {
         for($x = 1; $x <= 3; $x++) {
-            for($y = 1; $y <= 15; $y++) {
+            for($y = 1; $y <= 3; $y++) {
                 Property::factory()->create();
                 DB::table('property_user')->insert([
                     'property_id' => $x*15 - 15 + $y,
