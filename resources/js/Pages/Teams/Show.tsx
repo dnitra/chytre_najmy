@@ -11,7 +11,7 @@ import {
     User,
 } from "@/types";
 import React from "react";
-import { usePage } from '@inertiajs/react';
+import { usePage } from "@inertiajs/react";
 
 interface UserMembership extends User {
     membership: {
@@ -30,7 +30,7 @@ interface Props {
 }
 
 export default function Show({ team, availableRoles, permissions }: Props) {
-    console.log(usePage().props)
+    console.log(usePage().props);
     return (
         <AppLayout
             title="Team Settings"
