@@ -55,12 +55,7 @@ function Index() {
 Index.layout = (page: any) => (
     <AppLayout
         title="My Properties"
-        renderHeader={() => (
-            <h2 className="font-semibold text-xl text-gray-800 leading-tight">
-                My Properties
-            </h2>
-
-        )}
+        subtitle="My Properties"
     >
         {page}
     </AppLayout>

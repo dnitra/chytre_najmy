@@ -94,3 +94,16 @@ export interface TeamInvitation {
     created_at: DateTime;
     updated_at: DateTime;
 }
+
+export interface AppLayoutProps {
+    title: string;
+    activeProperty?: any;
+    subtitle: string;
+}
+
+export interface Navigation {
+    logout?: any,
+    switchToTeam?: any,
+    showingNavigationDropdown?: boolean,
+    setShowingNavigationDropdown?: any,
+}
