@@ -102,8 +102,8 @@ export interface AppLayoutProps {
 }
 
 export interface Navigation {
-    logout?: any,
-    switchToTeam?: any,
-    showingNavigationDropdown?: boolean,
-    setShowingNavigationDropdown?: any,
+    logout?: any;
+    switchToTeam?: any;
+    showingNavigationDropdown?: boolean;
+    setShowingNavigationDropdown?: any;
 }

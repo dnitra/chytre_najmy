@@ -32,10 +32,7 @@ interface Props {
 export default function Show({ team, availableRoles, permissions }: Props) {
     console.log(usePage().props);
     return (
-        <AppLayout
-            title="Portfolio Settings"
-            subtitle="Portfolio Settings"
-        >
+        <AppLayout title="Portfolio Settings" subtitle="Portfolio Settings">
             <div>
                 <div className="max-w-7xl mx-auto py-10 sm:px-6 lg:px-8">
                     <UpdateTeamNameForm team={team} permissions={permissions} />
