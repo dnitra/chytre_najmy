@@ -9,10 +9,12 @@ use Tests\TestCase;
 
 class DeleteTeamTest extends TestCase
 {
-//    use RefreshDatabase;
-//
-//    public function test_teams_can_be_deleted(): void
-//    {
+
+    use RefreshDatabase;
+
+    public function test_teams_can_be_deleted(): void
+    {
+        $this->markTestSkipped("This test has not been implemented yet.");
 //        $this->actingAs(
 //            $user = User::factory()
 //                ->withPersonalTeam()
@@ -48,5 +50,5 @@ class DeleteTeamTest extends TestCase
 //        $response = $this->delete("/teams/" . $user->currentTeam->id);
 //
 //        $this->assertNotNull($user->currentTeam->fresh());
-//    }
+    }
 }

@@ -14,7 +14,7 @@ class TeamSeeder extends Seeder
      */
     public function run(): void
     {
-        for ($i = 1; $i <= 11; $i++) {
+        for ($i = 1; $i <= 3; $i++) {
             TeamFactory::new()->create([
                 'user_id'=>$i,
             ]);

@@ -2,7 +2,7 @@ import { Link, usePage } from "@inertiajs/react";
 import route from "ziggy-js";
 import PropertyCardSmall from "@/Pages/OwnerPortal/MyProperties/PropertyCardSmall";
 import React from "react";
-import AppLayout from '@/Layouts/AppLayout';
+import AppLayout from "@/Layouts/AppLayout";
 
 type MyProperties = {
     id: number;
