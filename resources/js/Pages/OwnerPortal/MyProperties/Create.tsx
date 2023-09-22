@@ -1,4 +1,5 @@
 import MyProperties from "../MyProperties";
+import React from "react";
 import AppLayout from "@/Layouts/AppLayout";
 import route from "ziggy-js";
 import { useForm, usePage } from "@inertiajs/react";
@@ -170,10 +171,7 @@ const Create = () => {
 };
 
 Create.layout = (page: any) => (
-    <AppLayout
-        title="My Properties"
-        subtitle="My Properties"
-    >          
+    <AppLayout title="My Properties" subtitle="My Properties">
         <MyProperties children={page} />
     </AppLayout>
 );

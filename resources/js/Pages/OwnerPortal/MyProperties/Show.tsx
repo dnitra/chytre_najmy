@@ -25,10 +25,7 @@ const Show = () => {
 };
 
 Show.layout = (page: any) => (
-    <AppLayout
-        title="My Properties"
-        subtitle="My Properties"
-    >
+    <AppLayout title="My Properties" subtitle="My Properties">
         <MyProperties children={page} />
     </AppLayout>
 );

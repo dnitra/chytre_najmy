@@ -53,10 +53,7 @@ function Index() {
 }
 
 Index.layout = (page: any) => (
-    <AppLayout
-        title="My Properties"
-        subtitle="My Properties"
-    >
+    <AppLayout title="My Properties" subtitle="My Properties">
         {page}
     </AppLayout>
 );
